@@ -73,7 +73,7 @@ if __name__ == '__main__':
     print("Mean average precision: {}".format(ev.map()))
     print("Elapsed: {} seconds".format(round(time.time() - start_time, 4)))
 
-idx = metapy.index.make_inverted_index('config.toml')
+'''idx = metapy.index.make_inverted_index('config.toml')
 # Build the query object and initialize a ranker
 query = metapy.index.Document()
 ranker = metapy.index.OkapiBM25(k1=1.2,b=0.75,k3=500)
@@ -97,7 +97,7 @@ with open('cranfield-queries.txt') as query_file:
         f_bm25.write("\n")
         arr_OkapiBM25.append(avg_p)
         print("Query {} average precision: {}".format(query_num + 1, avg_p))
-ev.map()
+ev.map()'''
 
 '''from scipy import stats
 f_pvalue = open("significance.txt", "w") 
