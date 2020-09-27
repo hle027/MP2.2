@@ -31,7 +31,7 @@ def load_ranker(cfg_file):
     The parameter to this function, cfg_file, is the path to a
     configuration file used to load the index. You can ignore this for MP2.
     """
-    return InL2Ranker(some_param = 1.0)
+    return InL2Ranker(some_param=1.0)
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
@@ -59,11 +59,49 @@ if __name__ == '__main__':
 
     query = metapy.index.Document()
     print('Running queries')
+    f = open("inl2.avg_p.txt", "w")
+    arr_InL2 = []
     with open(query_path) as query_file:
         for query_num, line in enumerate(query_file):
             query.content(line.strip())
             results = ranker.score(idx, query, top_k)
             avg_p = ev.avg_p(results, query_start + query_num, top_k)
             print("Query {} average precision: {}".format(query_num + 1, avg_p))
+            f.write(str(avg_p))
+            f.write("\n")
+            arr_InL2.append(avg_p)
     print("Mean average precision: {}".format(ev.map()))
     print("Elapsed: {} seconds".format(round(time.time() - start_time, 4)))
+
+idx = metapy.index.make_inverted_index('config.toml')
+# Build the query object and initialize a ranker
+query = metapy.index.Document()
+ranker = metapy.index.OkapiBM25(k1=1.2,b=0.75,k3=500)
+# To do an IR evaluation, we need to use the queries file and relevance judgements.
+ev = metapy.index.IREval('config.toml')
+# Load the query_start from config.toml or default to zero if not found
+with open('config.toml', 'r') as fin:
+        cfg_d = pytoml.load(fin)
+query_cfg = cfg_d['query-runner']
+query_start = query_cfg.get('query-id-start', 0)
+# We will loop over the queries file and add each result to the IREval object ev.
+num_results = 10
+f_bm25 = open("bm25.avg_p.txt", "w")
+arr_OkapiBM25 = []
+with open('cranfield-queries.txt') as query_file:
+    for query_num, line in enumerate(query_file):
+        query.content(line.strip())
+        results = ranker.score(idx, query, num_results)                            
+        avg_p = ev.avg_p(results, query_start + query_num, num_results)
+        f_bm25.write(str(avg_p))
+        f_bm25.write("\n")
+        arr_OkapiBM25.append(avg_p)
+        print("Query {} average precision: {}".format(query_num + 1, avg_p))
+ev.map()
+
+'''from scipy import stats
+f_pvalue = open("significance.txt", "w") 
+(_, p_value) = stats.ttest_rel(arr_OkapiBM25, arr_InL2) 
+print(p_value, file=f_pvalue) 
+f_pvalue.close()'''
+
