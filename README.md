@@ -4,8 +4,6 @@ In this 4-part MP, you will get familiar with building and evaluating Search Eng
 
 ## Part 2
 
-### Due: Sept 27, 2020 
-
 In this part, you will use the MeTA toolkit to do the following:
 - create a search engine over a dataset
 - investigate the effect of parameter values for a standard retrieval function
@@ -194,10 +192,4 @@ In Python, you can use [this function](https://docs.scipy.org/doc/scipy/referenc
 The output of the significance test will give you a p-value. If the p-value is less than 0.05 (our chosen significance level), then we will say that there is a significant difference between the two average precision lists. That means that there is less than a 5% chance that the difference in the mean of the AP scores is due to random fluctuation.
 
 Write the p-value in a file called **significance.txt**. 
-***Do not include anything else in the file, just this number!***
 
-## Grading
-
-Your grade will be based on:
-- implementing the InL2 parameter correctly -- 0.7 (70) points
-- uploading significance.txt with the p-value. -- 0.3 (30) points
