@@ -1,7 +1,5 @@
 # CS410 MP2---Search Engines
 
-In this 4-part MP, you will get familiar with building and evaluating Search Engines.
-
 ## Part 2
 
 In this part, you will use the MeTA toolkit to do the following:
@@ -9,11 +7,6 @@ In this part, you will use the MeTA toolkit to do the following:
 - investigate the effect of parameter values for a standard retrieval function
 - write the InL2 retrieval function
 - investigate the effect of the parameter value for InL2
-
-
-Also, you are free to edit all files **except** 
-- livedatalab_config.json
-
 
 ## Setup
 We'll use [metapy](https://github.com/meta-toolkit/metapy)---Python bindings for MeTA. 
